@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro section-pad short-intro"><div class="container narrow-copy">
+ <span class="eyebrow">SIMT / PRIVATE AREA</span><h1 class="display-heading">Admin <em>sign in.</em></h1>
+ {% if not admin_ready %}<p class="notice-warning">Admin login is disabled. Set a unique SESSION_SECRET and ADMIN_PASSWORD of at least 12 characters in your server environment.</p>{% else %}
+ <form class="admin-login-form" action="/admin/login" method="post">
+   <div class="form-field"><label for="password">ADMIN PASSWORD</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+   <button class="btn btn-copper" type="submit">Sign in <span aria-hidden="true">↗</span></button>
+ </form>{% if login_error %}<p class="form-status error">{{ login_error }}</p>{% endif %}{% endif %}
+</div></section>
+{% endblock %}

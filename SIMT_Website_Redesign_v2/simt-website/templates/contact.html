@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro section-pad contact-intro"><div class="container">
+ <span class="eyebrow">CONTACT / START A CONVERSATION</span>
+ <h1 class="display-heading">Your next move<br><em>starts here.</em></h1>
+ <p class="body-lead">Tell us what you are working through. We'll review your question and follow up by email.</p>
+</div></section>
+<section class="section-pad contact-section"><div class="container contact-grid">
+ <aside class="contact-aside">
+   <span class="eyebrow">DIRECT ROUTES</span>
+   <h2 class="display-heading">Let's find<br><em>the direction.</em></h2>
+   <a class="contact-route" href="mailto:{{ site_email }}">{{ site_email }} <span>↗</span></a>
+   <a class="contact-route" href="{{ linkedin }}" rel="noopener noreferrer" target="_blank">SIMT ON LINKEDIN <span>↗</span></a>
+   {% if whatsapp %}
+    <a class="contact-route" href="{{ whatsapp }}" rel="noopener noreferrer" target="_blank">CHAT ON WHATSAPP <span>↗</span></a>
+   {% else %}
+    <p class="contact-muted">WhatsApp will be enabled once SIMT's business number is provided.</p>
+   {% endif %}
+   {% if calendly %}
+    <a class="contact-route" href="{{ calendly }}" target="_blank" rel="noopener noreferrer">OPEN CALENDLY IN A NEW TAB <span>↗</span></a>
+   {% endif %}
+   <div class="contact-note"><span class="eyebrow">A NOTE ON YOUR PRIVACY</span><p>Details submitted here are used to respond to your request. Read our <a href="/privacy">privacy notice</a>.</p></div>
+ </aside>
+ <div class="contact-form-shell">
+  <div class="form-tabs" role="tablist" aria-label="Contact type">
+   <button type="button" role="tab" class="tab active" id="tab-inquiry" aria-controls="panel-inquiry" aria-selected="true" data-kind="inquiry">BUSINESS INQUIRY</button>
+   <button type="button" role="tab" class="tab" id="tab-consultation" aria-controls="panel-inquiry" aria-selected="false" data-kind="consultation">REQUEST A CONSULTATION</button>
+  </div>
+  <div id="panel-inquiry" role="tabpanel" aria-labelledby="tab-inquiry">
+   <form id="inquiry-form" novalidate>
+    <input type="hidden" name="kind" id="kind" value="inquiry">
+    <div class="honey" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="form-row">
+     <div class="form-field"><label for="contact-name">YOUR NAME *</label><input id="contact-name" name="name" maxlength="100" minlength="2" autocomplete="name" required placeholder="Your full name"></div>
+     <div class="form-field"><label for="contact-email">WORK EMAIL *</label><input id="contact-email" name="email" type="email" maxlength="254" autocomplete="email" required placeholder="name@company.com"></div>
+    </div>
+    <div class="form-row">
+     <div class="form-field"><label for="contact-company">COMPANY / VENTURE</label><input id="contact-company" name="company" maxlength="140" autocomplete="organization" placeholder="Company name (optional)"></div>
+     <div class="form-field"><label for="contact-audience">YOUR BUSINESS STAGE</label><select id="contact-audience" name="audience"><option value="">Please select</option><option value="startups">Startup / new venture</option><option value="smes">SME / growing business</option><option value="corporates">Large company</option><option value="other">Other / not sure</option></select></div>
+    </div>
+    <div class="form-field"><label for="contact-service">AREA OF INTEREST</label><select id="contact-service" name="service"><option value="">Not sure yet / general inquiry</option>{% for s in services %}<option value="{{ s.slug }}">{{ s.title }}</option>{% endfor %}</select></div>
+    <div class="form-field only-consultation" hidden><label for="preferred-date">PREFERRED CONSULTATION DATE (OPTIONAL)</label><input type="date" id="preferred-date" name="preferred_date"><p class="field-help">This is a request, not a confirmed appointment. SIMT will confirm a suitable time by email.</p></div>
+    <div class="form-field"><label for="contact-message">HOW CAN WE HELP? *</label><textarea name="message" id="contact-message" minlength="12" maxlength="3000" rows="5" required placeholder="Tell us about the challenge, business or decision you're working through."></textarea></div>
+    <div class="form-bottom"><button class="btn btn-copper" id="submit-inquiry" type="submit">Send inquiry <span>↗</span></button><span class="field-help">* Required fields</span></div>
+    <p id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1"></p>
+   </form>
+  </div>
+ </div>
+</div></section>
+{% if calendly %}
+<section class="section-pad booking-section" id="book-online">
+ <div class="container">
+  <div class="section-head split-head">
+   <div><span class="eyebrow">BOOK A ONE-ON-ONE SESSION</span><h2 class="display-heading">Choose a time<br><em>that works for you.</em></h2></div>
+   <p class="body-lead booking-intro">Reserve a 30-minute SIMT Strategy Consultation. Available dates and times are shown in Calendly.</p>
+  </div>
+  <div class="calendly-frame">
+   <iframe title="Book a 30-minute SIMT Strategy Consultation with Calendly" src="{{ calendly }}?embed_domain={{ request.url.hostname }}&embed_type=Inline" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  <p class="field-help">After you complete a booking, Calendly sends the appointment confirmation and calendar details to your email. If the calendar does not load, <a href="{{ calendly }}" target="_blank" rel="noopener noreferrer">open the booking page directly</a>.</p>
+ </div>
+</section>
+{% endif %}
+{% endblock %}

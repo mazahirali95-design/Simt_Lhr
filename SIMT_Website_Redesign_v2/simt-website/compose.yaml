@@ -1,0 +1,25 @@
+services:
+  simt:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_PATH: /app/data/simt.sqlite3
+      DATABASE_URL: ${DATABASE_URL:-}
+      SIMT_EMAIL: ${SIMT_EMAIL:-simt.consultancy007@gmail.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      SESSION_SECRET: ${SESSION_SECRET}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      SMTP_STARTTLS: ${SMTP_STARTTLS:-true}
+      WHATSAPP_NUMBER: ${WHATSAPP_NUMBER:-}
+      CALENDLY_URL: ${CALENDLY_URL:-}
+      CALENDLY_WEBHOOK_SIGNING_KEY: ${CALENDLY_WEBHOOK_SIGNING_KEY:-}
+    volumes:
+      - simt-data:/app/data
+    restart: unless-stopped
+volumes:
+  simt-data:

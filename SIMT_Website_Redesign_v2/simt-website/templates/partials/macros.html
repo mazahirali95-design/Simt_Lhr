@@ -1,0 +1,19 @@
+{# Reusable graphic panel: SIMT's stepped path (origin dot → direction arrow), in the logo's visual language. #}
+{% macro path_panel(eyebrow) %}
+<div class="path-panel reveal">
+  <svg viewBox="0 0 520 320" role="img" aria-label="A stepped path rising from a starting point to a clear direction">
+    <g fill="none" stroke="#F0955C" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M40 270H130V210H220V150H310V90H400" stroke-width="2" opacity=".28" transform="translate(0,38)"/>
+      <path d="M40 270H130V210H220V150H310V90H400V62" stroke-width="3"/>
+      <path class="sv-flow" d="M40 270H130V210H220V150H310V90H400V62" stroke-width="3" stroke="#fff" opacity=".55"/>
+    </g>
+    <circle cx="40" cy="270" r="9" fill="#F0955C"/>
+    <polygon points="384,66 400,30 416,66" fill="#F0955C"/>
+  </svg>
+  <div>
+    <span class="eyebrow">{{ eyebrow }}</span>
+    <h2>{{ caller() }}</h2>
+    <span class="urdu" lang="ur" dir="rtl">سمت</span>
+  </div>
+</div>
+{% endmacro %}

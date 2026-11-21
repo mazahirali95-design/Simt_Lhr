@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "partials/macros.html" import path_panel %}
+{% block content %}
+<section class="page-intro section-pad short-intro"><div class="container">
+ <span class="eyebrow">OUR APPROACH / HOW WE THINK</span>
+ <h1 class="display-heading">The way through<br><em>is rarely a straight line.</em></h1>
+ <p class="body-lead">We make the path visible — moving from a good question to a confident recommendation through six deliberate steps.</p>
+</div></section>
+<section class="section-pad service-grid-section"><div class="container">
+ <ol class="path-steps process-grid">
+ {% for step in steps %}
+  <li class="process-step reveal"><span class="number">{{ step.n }}</span><h2>{{ step.title }}</h2><p>{{ step.summary }}</p></li>
+ {% endfor %}
+ </ol>
+</div></section>
+<section class="section-pad approach-image-block"><div class="container">
+ {% call path_panel('THE OUTPUT') %}Not a 60-page<br><em>drawer document.</em>{% endcall %}
+ <div class="image-caption narrow-copy"><p class="body-lead">A clear point of view, a prioritized plan and decisions your team can use.</p></div>
+</div></section>
+<section class="end-cta section-pad"><div class="container center-block">
+ <span class="eyebrow">PUT CLARITY TO WORK</span><h2 class="display-heading">Let's find your<br><em>next right move.</em></h2>
+ <a href="/contact?tab=consultation" class="btn btn-copper">Start a conversation <span aria-hidden="true">↗</span></a>
+</div></section>
+{% endblock %}

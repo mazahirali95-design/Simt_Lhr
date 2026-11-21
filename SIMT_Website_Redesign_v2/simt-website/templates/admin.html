@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-intro section-pad short-intro"><div class="container">
+ <span class="eyebrow">SIMT / PRIVATE DASHBOARD</span><h1 class="display-heading">Client <em>inquiries.</em></h1>
+ <div class="admin-meta"><p>{{ inquiries|length }} recent submissions · {{ counts.get('new',0) }} awaiting review</p><form action="/admin/logout" method="post"><button type="submit" class="btn btn-outline">Log out</button></form></div>
+</div></section>
+<section class="section-pad admin-section"><div class="container">
+ {% if not inquiries %}<p>No inquiries yet. Your form submissions will appear here when received.</p>{% endif %}
+ {% for i in inquiries %}
+ <article class="inquiry-record">
+  <div class="record-top"><div><span class="eyebrow">{{ i.kind|upper }} / {{ i.id }}</span><h2>{{ i.name }} <small>{{ i.company }}</small></h2></div><span class="record-status">{{ i.status|upper }}</span></div>
+  <p class="muted">{{ i.created_at }} UTC · {{ i.audience or 'Audience not specified' }} · {{ i.service or 'General inquiry' }}</p>
+  <p><a href="mailto:{{ i.email }}">{{ i.email }}</a>{% if i.preferred_date %} · Preferred date: {{ i.preferred_date }}{% endif %}</p>
+  <p class="record-message">{{ i.message }}</p>
+  <div class="record-actions"><span class="muted">Email notification: {{ i.notification_status }}</span>
+   <form method="post" action="/admin/inquiries/{{ i.id }}/status"><label for="status-{{ i.id }}">STATUS</label><select id="status-{{ i.id }}" name="status"><option value="new" {% if i.status=='new' %}selected{% endif %}>New</option><option value="contacted" {% if i.status=='contacted' %}selected{% endif %}>Contacted</option><option value="closed" {% if i.status=='closed' %}selected{% endif %}>Closed</option></select><button type="submit" class="small-button">UPDATE</button></form>
+  </div>
+ </article>
+ {% endfor %}
+</div></section>
+<section class="section-pad admin-section">
+ <div class="container">
+  <div class="section-head"><span class="eyebrow">CALENDLY / LIVE EVENTS</span><h2 class="display-heading">Consultation <em>bookings.</em></h2></div>
+  {% if not bookings %}<p>No Calendly bookings have reached the website yet. The Calendly webhook must be configured to populate this list.</p>{% endif %}
+  {% for b in bookings %}
+  <article class="inquiry-record">
+   <div class="record-top"><div><span class="eyebrow">CALENDLY / {{ b.status|upper }}</span><h2>{{ b.invitee_name or 'Invitee' }}</h2></div><span class="record-status">{{ b.status|upper }}</span></div>
+   <p class="muted">{{ b.updated_at }} UTC · {{ b.event_name or 'SIMT consultation' }}</p>
+   <p><a href="mailto:{{ b.invitee_email }}">{{ b.invitee_email }}</a></p>
+   {% if b.start_time %}<p>Start: {{ b.start_time }}{% if b.end_time %} · End: {{ b.end_time }}{% endif %}</p>{% endif %}
+  </article>
+  {% endfor %}
+ </div>
+</section>
+{% endblock %}
